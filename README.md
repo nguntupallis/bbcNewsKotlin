@@ -1,1 +1,1 @@
-# bbcNewsKotlin
+# BbcNewsKotlin Appium tests
