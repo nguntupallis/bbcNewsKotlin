@@ -6,9 +6,14 @@ This is a sample test framework to run Kotlin appium tests on Android device
 Before running the project, make sure you have the following prerequisites installed:
 
 - Java Development Kit (JDK) 11
-- Gradle build tool
-- Android SDK
-- Docker
+- Gradle build tool(version 8.1.1)
+- Android SDK(version 34.0.1)
+- Android Emulator(version 32.1.12)
+- Docker(version 4.19.0 (106363))
+  - Instructions for installing Docker can be found [here](https://docs.docker.com/engine/install/).
+- Android Virtual Device (AVD) with Pixel 6
+  - Create an AVD with the Pixel 6 device configuration using the Android Virtual Device Manager.
+  - Configure the AVD to match the desired specifications for your tests.
 
 ## Setup Instructions
 
@@ -17,39 +22,42 @@ Follow these steps to set up and run the project:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-2. Install the JDK 11 if you haven't already. You can download it from the official website or use your preferred package manager.
+   git clone git@github.com:nguntupallis/bbcNewsKotlin.git
+   ```
 
-3. Install Gradle. You can download it from the official website or use your preferred package manager.
+2. Build and run the project using Gradle: Navigate to the project directory and execute the following command to build and run the tests:
 
-4. Install the Android SDK. You can follow the instructions provided by Google in the official documentation.
+    ```bash
+    ./gradlew cucumber
+    ```
+    This command will compile the code, install the necessary dependencies, and run the tests using Cucumber on the configured AVD.
+    
+    Note: Again, please ensure that you have set up the environment variables and prerequisites correctly based on the documentation and installation guides for each tool.
 
-5. Install Docker. You can download it from the official website based on your operating system.
-6. Build the Docker image:
+3. Docker configuration (Work in Progress):
 
-```bash
-docker build -t appium-tests .
-```
-7. Run the Docker container:
-```bash
-docker run appium-tests
-```
-## Project Structure
-
-The project follows a standard directory structure for organizing Kotlin Appium tests. Here's an overview of the important directories and their purpose:
-
-- **src/main/kotlin**: This directory contains the main Kotlin source code of the project. It typically includes the implementation of utility classes, page objects, and other application-specific code.
-
-- **src/test/kotlin**: This directory contains the test source code of the project. It includes the implementation of test cases, step definitions, and other test-related code.
-
-- **src/test/resources**: This directory is used for storing test resources such as feature files and test data. Feature files define the behavior of the tests using Gherkin syntax.
-
-- **build.gradle.kts**: This file is the Gradle build script written in Kotlin DSL. It defines project dependencies, build configurations, and other build-related settings.
-
-- **settings.gradle.kts**: This file is also a Gradle build script written in Kotlin DSL. It specifies the modules or sub-projects included in the build.
-
-- **Dockerfile**: This file is used to build a Docker image for running the Appium tests in a containerized environment. It includes the necessary setup and dependencies for executing the tests.
-
-- **README.md**: This file contains information about the project, setup instructions, and other relevant details. It serves as a documentation guide for users and developers.
+    The Dockerfile provided in the repository is not completely configured yet. To build the Docker image, execute the following command in the project directory:
+    
+    ```bash
+    docker build -t appium-tests .
+    ```
+    After the Docker image is built, you can run the Docker container using the following command:
+    
+    ```bash
+    docker run appium-tests
+    ```
 
 
+## Project Progress
+Note: 
+I have only managed to complete the Video tab task as I encountered some challenges during the development process. This is the first time I have used Kotlin and Cucumber to develop Appium tests, which resulted in a learning curve.
+
+Working with Kotlin and configuring the Gradle dependencies took some time to figure out. Additionally, the deprecation of mobileBy, mobileElement, and WebDriverWait in the V8 Java client added complexity to developing common utility functions, requiring extra effort and research. Implementing the scrollToTheEndOfTheScreen functionality also posed a challenge.
+
+Furthermore, I faced difficulties launching the app in the emulator while using the APP_ACTIVITY capability in the desired capabilities. This issue consumed significant time during the implementation.
+
+Moreover, addressing the AUTO_GRANT_PERMISSIONS capability to disable pop-ups on the emulator proved to be challenging. Previously, I had primarily used Appium with real devices, so automating tests using an emulator introduced cache clearance issues and further delays.
+
+As a result, only the Video tab task has been fully completed at this stage. I plan to continue working on the remaining tasks and resolve the challenges related to the emulator to achieve the project's objectives.
+
+Additionally, please note that the Docker implementation is not complete. Ideally, I would use either BrowserStack or LambdaTest with the app_url to run the tests using Docker. However, there are some configuration issues to address. The JAVA_HOME environment variable was not being correctly set inside the Docker container, which needs to be resolved.
