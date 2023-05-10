@@ -24,7 +24,6 @@ object DriverManager {
     fun getDriver(): AppiumDriver {
         if (driver == null) {
             createDriver("Pixel 6")
-            println("mayukha getdriver")
         }
         return driver as AppiumDriver
     }
@@ -99,10 +98,8 @@ object DriverManager {
         Thread.sleep(5000)
         WaitUtils.waitUntilElementIsVisible(AppiumBy.className("android.widget.Button"), 10)
         val webView = WaitUtils.findElementByUiAutomator(driver, expression)
-        println("mayukha consent")
         Thread.sleep(5000)
         if (webView.isDisplayed) {
-            println("mayukha displayed")
             webView.click()
         }
     }
